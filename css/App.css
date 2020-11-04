@@ -1,0 +1,535 @@
+ .leaflet-container {
+            font: 20px/1.5 "Helvetica Neue", Arial, Helvetica, sans-serif;
+        }
+
+        .leaflet-popup-content-wrapper {
+            background-color: #ffffff;
+            opacity: 0.8;
+            padding: 1px;
+            text-align: left;
+            border-radius: 0px;
+            color: rgb(107, 107, 107);
+            font-size: 15px;
+        }
+
+        .leaflet-popup-content-wrapper,
+        .leaflet-popup-tip {
+            background: #ffffff;
+            opacity: 0.8;
+        }
+
+        .leaflet-popup-content {
+            margin-top: 18px;
+            margin-right: 12px;
+            margin-bottom: 1px;
+            margin-left: 12px;
+            line-height: 1.4;
+        }
+
+        .leaflet-popup {
+            position: absolute;
+            text-align: center;
+            margin-bottom: 0px;
+            margin-top: 10px;
+        }
+
+        /* Leaflet Layers Control */
+
+        .leaflet-control-layers {
+            border-radius: none;
+            box-shadow: none;
+        }
+
+        .leaflet-control-layers-list {
+            font-size: 16px;
+            line-height: 12px;
+            background: none !important;
+            color: rgb(0, 0, 0);
+        }
+
+        .leaflet-control-layers-base {
+            line-height: 12px;
+            margin-top: 5px;
+        }
+
+        .leaflet-control-layers-overlays {
+            margin-top: 5px;
+        }
+
+        .leaflet-control-layers-expanded {
+            width: 100% !important;
+            padding: 0px;
+            background-color: transparent;
+            border: none !important;
+        }
+
+
+
+        /* Style the header */
+        .header {
+            /* background-color: #444444;*/
+            background-color: steelblue;
+            padding: 12px;
+            text-align: left;
+            font-size: 15px;
+            width: 100%;
+            color: #FFFFFF;
+            height: 10%;
+            letter-spacing: 7px;
+
+
+        }
+
+        .header a:hover {
+            background-color: #ba2125;
+            color: white;
+
+        }
+
+        .header1 {
+            /*background-color: #f1f1f1;*/
+            background-color: #444444;
+            padding: 1px;
+            text-align: left;
+            font-size: 15px;
+            width: 100%;
+        }
+
+        .header1 a:hover {
+            background-color: #ba2125;
+            color: white;
+
+        }
+
+        /*custom scrollbar*/
+        /* width */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        /* Track */
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
+        }
+
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgb(119, 119, 119);
+        }
+
+        /*fin custom scrollbar*/
+
+        /* Create three equal columns that floats next to each other */
+        .column {
+            float: left;
+            width: 33.33%;
+            padding: 1px;
+            /*height: 400px;*/
+            /* Should be removed. Only for demonstration */
+            height: 100%;
+            /*overflow-y: auto;*/
+            /*overflow-x: hidden;*/
+        }
+
+        .column2 {
+            float: left;
+            width: 33.33%;
+            padding: 1px;
+            /*height: 400px;*/
+            /* Should be removed. Only for demonstration */
+            height: 100%;
+            /*overflow-y: auto;*/
+            /*overflow-x: hidden;*/
+        }
+
+        .column3 {
+            float: left;
+            width: 33.33%;
+            padding: 1px;
+            /*height: 400px;*/
+            /* Should be removed. Only for demonstration */
+            height: 100%;
+            /*overflow-y: auto;*/
+            /*overflow-x: hidden;*/
+        }
+
+        .row {
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+            margin-right: 0px;
+            margin-left: 0px;
+        }
+
+        .aa {
+            width: 7%;
+        }
+
+        .bb {
+            width: 23%;
+        }
+
+        .cc {
+            width: 70%;
+        }
+
+        /* Clear floats after the columns */
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        /* Style the footer */
+        .footer {
+            /*background-color: #444444;*/
+            background-color: steelblue;
+            padding: 1px;
+            text-align: center;
+            color: white;
+
+
+        }
+
+        /* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
+        @media (max-width: 600px) {
+            .column {
+                width: 100%;
+            }
+
+            .column2 {
+                width: 20%;
+            }
+
+            .column3 {
+                width: 80%;
+            }
+
+            .header h2 {
+                /* background-color: #444444;*/
+                background-color: steelblue;
+                padding: 1px 1px;
+                text-align: center;
+                font-size: 21px;
+                letter-spacing: 0px;
+            }
+
+            #info-pane2, #info-pane3 {
+                display: none;
+            }
+
+        }
+
+        /*nav tabs in modal*/
+        .nav-tabs .nav-item {
+            margin-bottom: -1px;
+            margin-left: 2px;
+        }
+
+        .nav-tabs .nav-item.show .nav-link,
+        .nav-tabs .nav-link.active {
+            color: #ffffff;
+            background-color: #ba2125;
+            border-color: #ba2125;
+            /* #dee2e6 #dee2e6 #fff;*/
+        }
+
+        .aaa {
+            color: #fdfdfd;
+            text-decoration: none;
+            background-color: #656565;
+        }
+
+        .button2 {
+            border: none;
+            color: rgb(218, 218, 218);
+            /*padding: 4px 10px;*/
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            transition-duration: 0.4s;
+            cursor: pointer;
+        }
+
+        .ParcListe {
+            border: 2px solid steelblue;
+            color: rgb(218, 218, 218);
+            /*padding: 4px 10px;*/
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            transition-duration: 0.4s;
+            cursor: pointer;
+        }
+
+        /*
+        .ParcListe :hover {
+            background-color: #1f497d;
+            color: white;
+            box-shadow: 0 0 50px #0ff;
+        }
+*/
+        .ParcListeCadre {
+            background-color: #ffffff;
+            color: rgb(255, 255, 255);
+        }
+
+        .ParcListeCadre:hover {
+            box-shadow: 0 0 50px rgb(4, 73, 177);
+        }
+
+        .ParcListe h3:hover {
+            background-color: #1f497d;
+            color: white;
+        }
+
+
+
+        .button1 {
+            background-color: #68a777;
+            color: rgb(255, 255, 255);
+            border: 2px solid #ffffff;
+        }
+
+        .button1:hover {
+            background-color: rgba(10, 194, 22, 0.79);
+            /*#4CAF50;*/
+            color: white;
+            border: 3px solid #ba2125;
+            /*#ffffff;*/
+        }
+
+        .button1 h3:hover {
+            background-color: #006627;
+            /*#4CAF50;*/
+            /* color: rgb(248, 2, 2);*/
+        }
+
+        .line {
+            display: inline-block;
+        }
+
+        .icon p:hover {
+            color: #1f497d;
+            /* text-shadow: 1px 1px 1px #FFFFFF; */
+            background-color: #ffffff;
+            padding: 1px;
+            border-radius: 3px;
+        }
+
+        .card-header {
+            padding: .75rem 1.25rem;
+            margin-bottom: 0;
+            background-color: #1f497d;
+            border-bottom: 1px solid rgba(206, 206, 206, 0.87);
+        }
+
+
+        .card-body {
+            background-color: #ececec;
+
+        }
+
+        .leaflet-tooltip.my-labels {
+            background-color: transparent;
+            border: transparent;
+            box-shadow: none;
+            font-weight: bold;
+            font-size: 12px;
+            color: #333333;
+            text-shadow: 2px 2px 0px #FFFFFF, 5px 4px 0px rgba(0, 0, 0, 0.15);
+        }
+
+
+
+        /* Style the tab */
+        .tab {
+            float: left;
+            border: 1px solid #ccc;
+            background-color: #1f497d;
+            color: white;
+            width: 100%;
+            height: 100%;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        /* Style the buttons inside the tab */
+        .tab button {
+            display: block;
+            background-color: inherit;
+            color: rgb(255, 255, 255);
+            /* padding: 22px 16px;*/
+            padding-top: 22px;
+            /*padding-right: 16px;*/
+            padding-bottom: 22px;
+            /* padding-left: 16px;*/
+            width: 100%;
+            border: none;
+            outline: none;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 17px;
+
+        }
+
+        /* Change background color of buttons on hover */
+        .tab button:hover {
+            background-color: rgba(221, 221, 221, 0.411);
+        }
+
+        /* Create an active/current "tab button" class */
+        .tab button.active {
+            background-color: #ffffff;
+            color: #1f497d;
+        }
+
+        /* Style the tab content */
+        .tabcontent {
+            background-color: white;
+            display: none;
+            float: left;
+            padding: 0px 12px;
+            border: 1px solid #ccc;
+            width: 100%;
+            border-left: none;
+            height: 100%;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .tabcontent p {
+            padding: 0px 12px;
+        }
+
+        /* Style the close button */
+        .topright {
+            float: right;
+            cursor: pointer;
+            font-size: 28px;
+        }
+
+        .topright:hover {
+            color: red;
+        }
+
+
+        .tabcontent {
+            animation: fadeEffect 1s;
+            /* Fading effect takes 1 second */
+        }
+
+        /* Go from zero to full opacity */
+        @keyframes fadeEffect {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .tabcontent h3 {
+            /*background-color: aqua;*/
+            /* margin-left: 0px;*/
+            /* margin-right: 0px;
+            padding: 0px 12px;*/
+            color: #1f497d;
+            padding-top: 7px;
+            padding-bottom: 7px;
+            border-bottom: 1px solid rgb(143, 143, 143);
+            text-align: center;
+        }
+
+        #info-pane {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
+            /*padding: 5px;*/
+            font-size: 14px;
+            background: white;
+            max-width: 300px;
+        }
+
+        #info-pane2 {
+            position: absolute;
+            bottom: 20px;
+            left: 50px;
+            z-index: 1000;
+            padding: 3px;
+            background: steelblue;
+            color: white;
+            width: 100px;
+            height: 40px;
+            font-size: 12px;
+            border-radius: 0px;
+        }
+
+        #info-pane3 {
+            position: absolute;
+            bottom: 20px;
+            left: 10px;
+            z-index: 1000;
+            /* padding: 15px;*/
+            background: rgb(15, 86, 145);
+            color: white;
+            width: 40px;
+            height: 40px;
+            font-size: 15px;
+            border-radius: 0px;
+            margin: auto;
+        }
+
+        .center {
+            text-align: center;
+            vertical-align: middle;
+            width: 100%;
+            height: 100%;
+        }
+
+        .tooltip_parc {
+            background: rgb(248, 132, 128);
+            border: 1px solid rgb(226, 226, 226);
+            font-size: 12px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .tooltip_poi {
+            background: rgb(59, 110, 221);
+            border: 1px solid rgb(226, 226, 226);
+            font-size: 12px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .infolist {
+            display: none;
+        }
+
+        .info {
+            padding-left: 6px;
+            padding-right: 6px;
+            padding-top: 3px;
+            background: steelblue;
+            color: white;
+            max-width: 300px;
+            font-size: 22px;
+            border-radius: 0px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+
+        }
