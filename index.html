@@ -1,0 +1,1877 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Parcs Nationaux Algérie</title>
+   
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
+
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.jsdelivr.net/npm/spectrum-colorpicker2/dist/spectrum.min.css">
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
+    <link href='https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css' rel='stylesheet'>
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet'>
+    <!-- Material Design Bootstrap -->
+
+    <link rel="stylesheet" href="css/MarkerCluster.css">
+    <link rel="stylesheet" href="css/MarkerCluster.Default.css">
+
+    <link rel="stylesheet" href="css/all.css">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body,
+        html {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #444444;
+            height: 100%;
+            margin: 0;
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+
+        .leaflet-container {
+            font: 20px/1.5 "Helvetica Neue", Arial, Helvetica, sans-serif;
+        }
+
+        .leaflet-popup-content-wrapper {
+            background-color: #ffffff;
+            opacity: 0.8;
+            padding: 1px;
+            text-align: left;
+            border-radius: 0px;
+            color: rgb(107, 107, 107);
+            font-size: 15px;
+        }
+
+        .leaflet-popup-content-wrapper,
+        .leaflet-popup-tip {
+            background: #ffffff;
+            opacity: 0.8;
+        }
+
+        .leaflet-popup-content {
+            margin-top: 18px;
+            margin-right: 12px;
+            margin-bottom: 1px;
+            margin-left: 12px;
+            line-height: 1.4;
+        }
+
+        .leaflet-popup {
+            position: absolute;
+            text-align: center;
+            margin-bottom: 0px;
+            margin-top: 10px;
+        }
+
+        /* Leaflet Layers Control */
+
+        .leaflet-control-layers {
+            border-radius: none;
+            box-shadow: none;
+        }
+
+        .leaflet-control-layers-list {
+            font-size: 16px;
+            line-height: 12px;
+            background: none !important;
+            color: rgb(0, 0, 0);
+        }
+
+        .leaflet-control-layers-base {
+            line-height: 12px;
+            margin-top: 5px;
+        }
+
+        .leaflet-control-layers-overlays {
+            margin-top: 5px;
+        }
+
+        .leaflet-control-layers-expanded {
+            width: 100% !important;
+            padding: 0px;
+            background-color: transparent;
+            border: none !important;
+        }
+
+
+
+        /* Style the header */
+        .header {
+            /* background-color: #444444;*/
+            background-color: steelblue;
+            padding: 12px;
+
+            text-align: left;
+            font-size: 15px;
+            width: 100%;
+            color: #FFFFFF;
+
+
+        }
+
+        .header a:hover {
+            background-color: #ba2125;
+            color: white;
+
+        }
+
+        .header1 {
+            /*background-color: #f1f1f1;*/
+            background-color: #444444;
+            padding: 1px;
+            text-align: left;
+            font-size: 15px;
+            width: 100%;
+        }
+
+        .header1 a:hover {
+            background-color: #ba2125;
+            color: white;
+
+        }
+
+        /*custom scrollbar*/
+        /* width */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        /* Track */
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
+        }
+
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgb(119, 119, 119);
+        }
+
+        /*fin custom scrollbar*/
+
+        /* Create three equal columns that floats next to each other */
+        .column {
+            float: left;
+            width: 33.33%;
+            padding: 1px;
+            /*height: 400px;*/
+            /* Should be removed. Only for demonstration */
+            height: 100%;
+            /*overflow-y: auto;*/
+            /*overflow-x: hidden;*/
+        }
+
+        .row {
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+            margin-right: 0px;
+            margin-left: 0px;
+        }
+
+        .aa {
+            width: 7%;
+        }
+
+        .bb {
+            width: 23%;
+        }
+
+        .cc {
+            width: 70%;
+        }
+
+        /* Clear floats after the columns */
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        /* Style the footer */
+        .footer {
+            /*background-color: #444444;*/
+            background-color: steelblue;
+            padding: 1px;
+            text-align: center;
+            color: white;
+
+
+        }
+
+        /* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
+        @media (max-width: 600px) {
+            .column {
+                width: 100%;
+            }
+        }
+
+        /*nav tabs in modal*/
+        .nav-tabs .nav-item {
+            margin-bottom: -1px;
+            margin-left: 2px;
+        }
+
+        .nav-tabs .nav-item.show .nav-link,
+        .nav-tabs .nav-link.active {
+            color: #ffffff;
+            background-color: #ba2125;
+            border-color: #ba2125;
+            /* #dee2e6 #dee2e6 #fff;*/
+        }
+
+        .aaa {
+            color: #fdfdfd;
+            text-decoration: none;
+            background-color: #656565;
+        }
+
+        .button2 {
+            border: none;
+            color: rgb(218, 218, 218);
+            /*padding: 4px 10px;*/
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            transition-duration: 0.4s;
+            cursor: pointer;
+        }
+
+        .ParcListe {
+            border: 2px solid steelblue;
+            color: rgb(218, 218, 218);
+            /*padding: 4px 10px;*/
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            transition-duration: 0.4s;
+            cursor: pointer;
+        }
+
+        /*
+        .ParcListe :hover {
+            background-color: #1f497d;
+            color: white;
+            box-shadow: 0 0 50px #0ff;
+        }
+*/
+        .ParcListeCadre {
+            background-color: #ffffff;
+            color: rgb(255, 255, 255);
+        }
+
+        .ParcListeCadre:hover {
+            box-shadow: 0 0 50px rgb(4, 73, 177);
+        }
+
+        .ParcListe h3:hover {
+            background-color: #1f497d;
+            color: white;
+        }
+
+
+
+        .button1 {
+            background-color: #68a777;
+            color: rgb(255, 255, 255);
+            border: 2px solid #ffffff;
+        }
+
+        .button1:hover {
+            background-color: rgba(10, 194, 22, 0.79);
+            /*#4CAF50;*/
+            color: white;
+            border: 3px solid #ba2125;
+            /*#ffffff;*/
+        }
+
+        .button1 h3:hover {
+            background-color: #006627;
+            /*#4CAF50;*/
+            /* color: rgb(248, 2, 2);*/
+        }
+
+        .line {
+            display: inline-block;
+        }
+
+        .icon p:hover {
+            color: #1f497d;
+            /* text-shadow: 1px 1px 1px #FFFFFF; */
+            background-color: #ffffff;
+            padding: 1px;
+            border-radius: 3px;
+        }
+
+        .card-header {
+            padding: .75rem 1.25rem;
+            margin-bottom: 0;
+            background-color: #1f497d;
+            border-bottom: 1px solid rgba(206, 206, 206, 0.87);
+        }
+
+
+        .card-body {
+            background-color: #ececec;
+
+        }
+
+        .leaflet-tooltip.my-labels {
+            background-color: transparent;
+            border: transparent;
+            box-shadow: none;
+            font-weight: bold;
+            font-size: 12px;
+            color: #333333;
+            text-shadow: 2px 2px 0px #FFFFFF, 5px 4px 0px rgba(0, 0, 0, 0.15);
+        }
+
+
+
+        /* Style the tab */
+        .tab {
+            float: left;
+            border: 1px solid #ccc;
+            background-color: #1f497d;
+            color: white;
+            width: 100%;
+            height: 100%;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        /* Style the buttons inside the tab */
+        .tab button {
+            display: block;
+            background-color: inherit;
+            color: rgb(255, 255, 255);
+            /* padding: 22px 16px;*/
+            padding-top: 22px;
+            /*padding-right: 16px;*/
+            padding-bottom: 22px;
+            /* padding-left: 16px;*/
+            width: 100%;
+            border: none;
+            outline: none;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 17px;
+
+        }
+
+        /* Change background color of buttons on hover */
+        .tab button:hover {
+            background-color: rgba(221, 221, 221, 0.411);
+        }
+
+        /* Create an active/current "tab button" class */
+        .tab button.active {
+            background-color: #ffffff;
+            color: #1f497d;
+        }
+
+        /* Style the tab content */
+        .tabcontent {
+            background-color: white;
+            display: none;
+            float: left;
+            padding: 0px 12px;
+            border: 1px solid #ccc;
+            width: 100%;
+            border-left: none;
+            height: 100%;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .tabcontent p {
+            padding: 0px 12px;
+        }
+
+        /* Style the close button */
+        .topright {
+            float: right;
+            cursor: pointer;
+            font-size: 28px;
+        }
+
+        .topright:hover {
+            color: red;
+        }
+
+
+        .tabcontent {
+            animation: fadeEffect 1s;
+            /* Fading effect takes 1 second */
+        }
+
+        /* Go from zero to full opacity */
+        @keyframes fadeEffect {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .tabcontent h3 {
+            /*background-color: aqua;*/
+            /* margin-left: 0px;*/
+            /* margin-right: 0px;
+            padding: 0px 12px;*/
+            color: #1f497d;
+            padding-top: 7px;
+            padding-bottom: 7px;
+            border-bottom: 1px solid rgb(143, 143, 143);
+            text-align: center;
+        }
+
+        #info-pane {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
+            /*padding: 5px;*/
+            font-size: 14px;
+            background: white;
+            max-width: 300px;
+        }
+
+        #info-pane2 {
+            position: absolute;
+            bottom: 20px;
+            left: 50px;
+            z-index: 1000;
+            padding: 3px;
+            background: steelblue;
+            color: white;
+            width: 100px;
+            height: 40px;
+            font-size: 12px;
+            border-radius: 0px;
+        }
+
+        #info-pane3 {
+            position: absolute;
+            bottom: 20px;
+            left: 10px;
+            z-index: 1000;
+            /* padding: 15px;*/
+            background: rgb(15, 86, 145);
+            color: white;
+            width: 40px;
+            height: 40px;
+            font-size: 15px;
+            border-radius: 0px;
+            margin: auto;
+        }
+
+        .center {
+            text-align: center;
+            vertical-align: middle;
+            width: 100%;
+            height: 100%;
+        }
+
+        .tooltip_parc {
+            background: rgb(248, 132, 128);
+            border: 1px solid rgb(226, 226, 226);
+            font-size: 12px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .tooltip_poi {
+            background: rgb(59, 110, 221);
+            border: 1px solid rgb(226, 226, 226);
+            font-size: 12px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .infolist {
+            display: none;
+        }
+
+        .info {
+            padding-left: 6px;
+            padding-right: 6px;
+            padding-top: 3px;
+            background: steelblue;
+            color: white;
+            max-width: 300px;
+            font-size: 22px;
+            border-radius: 0px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header" style="height: 10%;">
+        <h2 style="letter-spacing: 7px;"><i class="fas fa-map-marked-alt fa-lg"></i>&nbsp;&nbsp;Parcs Nationaux en Algérie
+        </h2>
+
+    </div>
+
+    <div class="row" style="height: 85%;">
+        <div class="column aa" style="background-color:#aaa;height: 100%;">
+
+            <div class="tab">
+                <button class="tablinks" onclick="openCity(event, 'home')" id="defaultOpen"><i
+                        class="fas fa-home"></i><br>home</button>
+                <button class="tablinks" onclick="openCity(event, 'basemap')"><i class="fas fa-map"></i><br>Map</button>
+                <button class="tablinks" onclick="openCity(event, 'overly')"><i
+                        class="fas fa-layer-group"></i><br>Overly</button>
+                <button class="tablinks"  id="list_B" onclick="openCity(event, 'list')"><i class="fas fa-list"></i><br>List</button>
+                <button class="tablinks" id="info_B" onclick="openCity(event, 'info')"><i
+                        class="fas fa-info-circle"></i><br>Info</button>
+               
+               
+                <button class="tablinks" onclick="openCity(event, 'tools')"><i
+                        class="fas fa-tools"></i><br>Tools</button>
+               
+            </div>
+
+        </div>
+
+        <div class="column bb" style="background-color:#aaa;height: 100%;">
+            <div id="home" class="tabcontent">
+                <!--<span onclick="this.parentElement.style.display='none'" class="topright">&times</span>-->
+                <h3>Home</h3>
+                <p>Application des Parcs Nationaux en Algérie.</p>
+                <p>Faite par : Selmane Ishak,</p>
+                <p>E-mail : isacselmane@gmail.com,</p>
+            </div>
+
+            <div id="basemap" class="tabcontent">
+                <!--<span onclick="this.parentElement.style.display='none'" class="topright">&times</span>-->
+                <h3>BaseMaps</h3>
+                <p>
+                    <!--Accordion-->
+                <div class="bs-example">
+                    <div class="accordion" id="accordionExample">
+                        <div class="card">
+                            <div class="card-header" id="headingOne">
+                                <h2 class="mb-0">
+                                    <button type="button" class="btn btn-link collapsed" data-toggle="collapse"
+                                        style="text-decoration: none;color: #ffffff;" data-target="#collapseOne">ESRI
+                                        BaseMaps</button>
+                                </h2>
+                            </div>
+                            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                                data-parent="#accordionExample">
+                                <div class="card-body">
+                                    <form>
+                                        <div class="custom-control custom-radio ">
+                                            <input type="radio" class="custom-control-input " id="EsriWorldStreetMap"
+                                                name="baseMaps" checked>
+                                            <label class="custom-control-label" for="EsriWorldStreetMap">Street
+                                                Map</label>
+                                        </div>
+                                        <div class="custom-control custom-radio ">
+                                            <input type="radio" class="custom-control-input" id="Esri_NatGeoWorldMap"
+                                                name="baseMaps">
+                                            <label class="custom-control-label" for="Esri_NatGeoWorldMap">Nat Geo Map
+                                            </label>
+                                        </div>
+                                        <div class="custom-control custom-radio ">
+                                            <input type="radio" class="custom-control-input" id="Esri_WorldImagery"
+                                                name="baseMaps">
+                                            <label class="custom-control-label" for="Esri_WorldImagery">Imagery</label>
+                                        </div>
+                                    </form>
+
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="card">
+                            <div class="card-header" id="headingTwo">
+                                <h2 class="mb-0">
+                                    <button type="button" class="btn btn-link collapsed " data-toggle="collapse"
+                                        style="text-decoration: none;color: #ffffff;" data-target="#collapseTwo">Stamen
+                                        BaseMaps</button>
+                                </h2>
+                            </div>
+                            <div id="collapseTwo" class="collapse " aria-labelledby="headingTwo"
+                                data-parent="#accordionExample">
+                                <div class="card-body">
+                                    <form>
+                                        <div class="custom-control custom-radio ">
+                                            <input type="radio" class="custom-control-input " id="Stamen_Terrain"
+                                                name="baseMaps">
+                                            <label class="custom-control-label" for="Stamen_Terrain">Terrain</label>
+                                        </div>
+                                        <div class="custom-control custom-radio ">
+                                            <input type="radio" class="custom-control-input" id="Stamen_Toner"
+                                                name="baseMaps">
+                                            <label class="custom-control-label" for="Stamen_Toner">Toner</label>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="card">
+                            <div class="card-header" id="headingThree">
+                                <h2 class="mb-0">
+                                    <button type="button" class="btn btn-link collapsed" data-toggle="collapse"
+                                        style="text-decoration:none;color: #ffffff;" data-target="#collapseThree">Open
+                                        Street Map</button>
+                                </h2>
+                            </div>
+                            <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
+                                data-parent="#accordionExample">
+                                <div class="card-body">
+                                    <form>
+                                        <div class="custom-control custom-radio ">
+                                            <input type="radio" class="custom-control-input" id="OpenStreetMap_Mapnik"
+                                                name="baseMaps">
+                                            <label class="custom-control-label"
+                                                for="OpenStreetMap_Mapnik">Mapnik</label>
+                                        </div>
+                                        <div class="custom-control custom-radio ">
+                                            <input type="radio" class="custom-control-input" id="CyclOSM"
+                                                name="baseMaps">
+                                            <label class="custom-control-label" for="CyclOSM">CyclOSM</label>
+                                        </div>
+
+                                        <!--<div class="custom-control custom-switch ">
+                                            <input type="checkbox" class="custom-control-input " id="Hydrologie"
+                                                name="Hydrologie">
+                                            <label class="custom-control-label" for="Hydrologie">Hydrologie</label>
+                                        </div>
+                                        <div class="custom-control custom-switch ">
+                                            <input type="checkbox" class="custom-control-input" id="Labels"
+                                                name="Labels">
+                                            <label class="custom-control-label" for="Labels">Parcs
+                                                Labels</label>
+                                        </div>-->
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--fin Accordion-->
+
+                </p>
+            </div>
+            <div id="overly" class="tabcontent">
+                <!--<span onclick="this.parentElement.style.display='none'" class="topright">&times</span>-->
+                <h3>Overly</h3>
+                <p>
+                    <!--Accordion-->
+                <div class="bs-example">
+                    <div class="accordion" id="accordionExample2">
+
+                        <div class="card">
+                            <div class="card-header" id="headingFour">
+                                <h2 class="mb-0">
+                                    <button type="button" class="btn btn-link collapsed" data-toggle="collapse"
+                                        style="text-decoration:none;color: #ffffff;"
+                                        data-target="#collapseFour">Overlys</button>
+                                </h2>
+                            </div>
+                            <div id="collapseFour" class="collapse show" aria-labelledby="headingFour"
+                                data-parent="#accordionExample2">
+                                <div class="card-body">
+                                    <form>
+                                        <div class="custom-control custom-switch ">
+                                            <input type="checkbox" class="custom-control-input " id="Parcs_poly"
+                                                name="Parcs_poly" checked>
+                                            <label class="custom-control-label" for="Parcs_poly">Parcs polygone</label>
+                                        </div>
+                                        <div class="custom-control custom-switch ">
+                                            <input type="checkbox" class="custom-control-input" id="Parcs_point"
+                                                name="Parcs_point" >
+                                            <label class="custom-control-label" for="Parcs_point">Parcs Point</label>
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="card">
+                            <div class="card-header" id="headingFive">
+                                <h2 class="mb-0">
+                                    <button type="button" class="btn btn-link collapsed" data-toggle="collapse"
+                                        style="text-decoration:none;color: #ffffff;" data-target="#collapseFive">Points
+                                        d'interêts</button>
+                                </h2>
+                            </div>
+                            <div id="collapseFive" class="collapse " aria-labelledby="headingFive"
+                                data-parent="#accordionExample2">
+                                <div class="card-body">
+                                    <form>
+                                        <div class="custom-control custom-switch ">
+                                            <input type="checkbox" class="custom-control-input " id="POI"
+                                                name="Parcs_poly">
+                                            <label class="custom-control-label" for="POI">Points d'interêts</label>
+                                        </div>
+                                        <!--<div class="custom-control custom-switch ">
+                                            <input type="checkbox" class="custom-control-input" id="Pa"
+                                                name="Parcs_point" checked>
+                                            <label class="custom-control-label" for="Pa">Parcs Point</label>
+                                        </div>-->
+                                    </form>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!--fin Accordion-->
+                </p>
+            </div>
+            <div id="list" class="tabcontent">
+                <!--<span onclick="this.parentElement.style.display='none'" class="topright">&times</span>-->
+                <h3>Liste</h3>
+                <div id="listparcs">
+                    <a class="ParcListe ParcListeCadre" style="color: #1f497d">
+                        <h3>Parc National d'El Kala</h3>
+                        <strong>Wilaya</strong>
+                        <address>d'El Tarf.</address>
+                        <img src="Photos/kala.jpg" alt="logo" style="width:100%;">
+                    </a>
+                    <a class="ParcListe ParcListeCadre" style="color: #1f497d">
+                        <h3>Parc National de Belezma</h3>
+                        <strong>Wilaya</strong>
+                        <address>de Batna. </address>
+                        <img src="Photos/Belezma.jpg" alt="logo" style="width:100%;">
+                    </a>
+                    <a class="ParcListe ParcListeCadre" style="color: #1f497d">
+                        <h3>Parc National de Chréa</h3>
+                        <strong>Wilaya</strong>
+                        <address> de Blida. </address>
+                        <img src="Photos/Chrea.jpg" alt="logo" style="width:100%;">
+                    </a>
+                    <a class="ParcListe ParcListeCadre" style="color: #1f497d">
+                        <h3>Parc National de Djebal Aissa</h3>
+                        <strong>Wilaya</strong>
+                        <address>de Nâama. </address>
+                        <img src="Photos/Djebel_Aissa.jpg" alt="logo" style="width:100%;">
+                    </a>
+                    <a class="ParcListe ParcListeCadre " style="color: #1f497d">
+                        <h3>Parc National de Gouraya</h3>
+                        <strong>Wilaya</strong>
+                        <address>de Béjaia. </address>
+                        <img src="Photos/Gouraya.jpg" alt="logo" style="width:100%;">
+                    </a>
+                    <a class="ParcListe ParcListeCadre" style="color: #1f497d">
+                        <h3>Parc National de Tassili</h3>
+                        <strong>Wilaya</strong>
+                        <address>d'Illizi. </address>
+                        <img src="Photos/Tassili.jpg" alt="logo" style="width:100%;">
+                    </a>
+                    <a class="ParcListe ParcListeCadre" style="color: #1f497d">
+                        <h3 style="letter-spacing: 2px;">Parc National de Taza</h3>
+                        <strong>Wilaya</strong>
+                        <address>de Jijel. </address>
+                        <img src="Photos/taza.jpg" alt="logo" style="width:100%;">
+                    </a>
+                    <a class="ParcListe ParcListeCadre" style="color: #1f497d">
+                        <h3>Parc National de Tlemcen</h3>
+                        <strong>Wilaya</strong>
+                        <address>de Tlemcen. </address>
+                        <img src="Photos/Tlemcen.jpg" alt="logo" style="width:100%;">
+                    </a>
+                    <a class="ParcListe ParcListeCadre" style="color: #1f497d">
+                        <h3>Parc National du Djurdjura</h3>
+                        <strong>Wilaya</strong>
+                        <address>de Tizi Ouzou. </address>
+                        <img src="Photos/djurdjura.jpg" alt="logo" style="width:100%;">
+                    </a>
+                    <a class="ParcListe ParcListeCadre" style="color: #1f497d">
+                        <h3>Réserve naturelle de Beni Belaid</h3>
+                        <strong>Wilaya</strong>de Jijel. </address>
+                        <img src="Photos/beni_belaid.jpg" alt="logo" style="width:100%;">
+                    </a>
+
+                </div>
+            </div>
+            <div id="info" class="tabcontent">
+                <!--<span onclick="this.parentElement.style.display='none'" class="topright">&times</span>-->
+                <h3>Info</h3>
+                <h3 style="background-color: #1f497d;color:white;text-align: center;padding: 15px 4px;">Présentation du
+                    parc</h3>
+                <p class="infolist" id="Parc National de Djebal Aissa"><b>Le parc national de Djebel Aissa (en arabe
+                        :الحظيرة الوطنية
+                        لجبل عيسى)</b>
+                    est un parc
+                    national de l’Atlas saharien situé à l'ouest de l'Algérie, dans la wilaya de Naâma. Il a été
+                    créé en 2003 et
+                    s’étend sur 24 400 hectares.
+                    Le parc en question revêt une importance particulière dans la préservation de l’écosystème de la
+                    région des
+                    Hauts-Plateaux de l’ouest, menacée par les phénomènes de désertification et d’ensablement.
+                </p>
+                <p class="infolist" id="Parc National de Tlemcen"><b>Le Parc national de Tlemcen (en arabe : الحديقة
+                        الوطنية تلمسان)</b>,
+                    est un parc
+                    national
+                    algérien, situé dans la wilaya de Tlemcen, au nord-ouest de l'Algérie.
+                    C'est l'un des plus récents parcs nationaux d'Algérie. En plus des forêts d'Ifri, de Zariffet et
+                    d'Ain
+                    Fezza, et des Cascades d'El-Ourit et falaises d'El-Ourit, il abrite d'importants sites
+                    archéologiques et
+                    spéléologiques, ainsi que les ruines de Mansourah et la mosquée de Sidi Boumediene.
+                    En 2016, les monts de Tlemcen ainsi que le parc sont reconnus réserve de biosphère par l'Unesco.
+                </p>
+                <p class="infolist" id="Parc National de Taza"><b>Le parc national de Taza (en arabe : الحظيرة
+                        الوطنية لتازة)</b>, est un
+                    parc
+                    national algérien,
+                    situé dans la wilaya de Jijel, au Nord de l'Algérie, au bord de la méditerranée. Connu surtout
+                    pour ses
+                    grottes, il abrite de vastes plages de sable ainsi que des gouffres et des falaises.
+                    Le parc a été reconnu réserve de biosphère par l'UNESCO en 2004.
+                </p>
+                <p class="infolist" id="Parc National d'El Kala"><b>Le parc national d’El-Kala (en arabe : الحديقة
+                        الوطنية القالة)</b>, est
+                    un parc
+                    national algérien,
+                    situé près de la ville d'El Kala dans la wilaya d'El-Tarf, au nord-est de l'Algérie. Créé en
+                    1983,
+                    avec une superficie de 80 000 ha, il est bordé au nord par la mer Méditerranée et à l'est par la
+                    frontière
+                    tunisienne.
+                    Il abrite de nombreux lacs et un écosystème unique dans le bassin méditerranéen. Le parc a été
+                    classé
+                    réserve de biosphère par l'UNESCO en 19901.
+                    En avril 2008, le parc est menacé par le tracé de l'autoroute Est-Ouest reliant la frontière
+                    tunisienne à la
+                    frontière marocaine qui prévoit de le traverser
+                    de part en part. Si elle venait à se réaliser, cette infrastructure aurait des conséquences
+                    désastreuses et
+                    irréversibles pour cet écosystème. Diverses
+                    actions sont entreprises pour détourner l'autoroute sur une variante de tracé contournant le
+                    parc plus au
+                    sud
+                </p>
+                <p class="infolist" id="Parc National de Belezma"><b>Le parc national de Belezma (en arabe : الحظيرة
+                        الوطنية بلزمة)</b> est
+                    un parc national algérien, situé dans la wilaya de Batna, au nord-est de l'Algérie.
+                    Le mont Belezma, est un imposant massif au relief tourmenté, avec des vallées très étroites et
+                    des pics culminants jusqu’à 2 136 m (djebel Tichaou) et 2 178 m (djebel Refaâ), constitue le
+                    début de la chaîne des Aurès.
+                    Le parc national de Belezma fut créé par le décret présidentiel no 84/326 du 3 novembre 1984, au
+                    même moment que les deux parcs nationaux de Gouraya et Taza1. Sa classification a été motivée
+                    par la présence de grandes étendues de cèdres de l’Atlas dans une zone de grandes influences
+                    sahariennes et méditerranéennes, la présence d’un patrimoine archéologique et historique d’une
+                    valeur inestimable et une mosaïque de zones humides au nord-nord-est.
+                    Le parc national de Belezma se situe sur la partie orientale de l’Algérie du Nord, il correspond
+                    à un chaînon montagneux marquant le début du massif des Aurès. Il s’étend sur une superficie de
+                    26 250 hectares et représente un territoire de configuration allongé, étiré d’orientation
+                    sud-ouest /nord–est à proximité de la ville de Batna.
+                    Le parc a été reconnu réserve de biosphère par l'Unesco en juin 2015 sur une surface de 262,50
+                    km².
+                </p>
+                <p class="infolist" id="Parc National de Chréa"><b>Le parc national de Chréa (en arabe : الحظيرة
+                        الوطنية الشريعة)</b>, est
+                    un parc national d'Algérie situé à 50 km au sud d'Alger dans la wilaya de Blida.
+                    C'est essentiellement un parc montagneux, situé en plein cœur du massif blidéen (partie de
+                    l'Atlas tellien). Connu surtout pour sa station de ski à Chréa, il abrite aussi de vastes forêts
+                    de cèdres centenaires ainsi que les gorges de la Chiffa et le lac de Dhaya à Tamesguida. Le parc
+                    offre également la possibilité de faire des randonnées pédestres.
+                    Les cédraies sont le refuge d'une population de macaques berbères (Macaca sylvanus), espèce
+                    menacée.
+                    Le parc a été reconnu réserve de biosphère par l'UNESCO en 2002
+                </p>
+                <p class="infolist" id="Parc National de Gouraya"><b>Le parc national de Gouraya (en berbère : Urti
+                        Aɣelnaw n Guraya</b>; en
+                    arabe : الحديقة الوطنية قورايا) est un parc national algérien, situé dans la wilaya de Béjaïa en
+                    Kabylie, au nord de l'Algérie et au bord de la méditerranée. Il accueille environ 1 200 000
+                    visiteurs par an, surtout en période estivale. Ses plages de sables, ses falaises et ses eaux
+                    cristallines participent à son attrait. Le mont Gouraya avec ses 660 m domine le parc. La flore
+                    et la faune y sont variées dont le macaque berbère et le chacal doré qui vivent dans les forêts
+                    du parc. Le parc a été classé réserve de biosphère par l'UNESCO en 2004.
+                    Le parc est situé sur la côte orientale de la Kabylie dans la wilaya de Béjaia à 230 km d'Alger,
+                    cette situation met le parc en relation avec d'autres villes : à 111 km au nord-ouest de Sétif,
+                    à 127 km à l'est de Tizi Ouzou et à 96 km à l'ouest de Jijel. Ce parc a été créé pour les
+                    diversités en végétation endémique, et ses milieux marins et continentaux ainsi qu'à l'histoire
+                    régionale. Situé entièrement dans la commune de Béjaia, il occupe une superficie de 2080 ha, à
+                    laquelle s’ajoutent une zone marine de 7842 ha ainsi qu’une zone lacustre « le lac de Mézaia »
+                    d’une superficie de 3 ha. Il présente des richesses archéologiques notamment 15 sites
+                    historiques et 9 pittoresques.
+                </p>
+                <p class="infolist" id="Parc National de Tassili">
+                    <b>Le parc culturel du Tassili (anciennement parc national du Tassili
+                        jusqu'à 2011)</b>, est un parc national algérien, situé près de la ville de Djanet, dans la
+                    wilaya
+                    de Illizi, dans le Sud de l'Algérie.
+                    Couvrant une superficie de 138 000 km2, il est le premier parc d'Algérie par la taille. Le parc
+                    englobe une grande partie du massif du Tassili n'Ajjer, l'Erg Admer et la Tadrart Rouge.
+                    L'occupation humaine de la région remonte à plus de 10 000 ans, lorsque des Néolithiques
+                    l'arpentaient pour chasser et pratiquer la cueillette.
+                    Il est classé depuis 1982 au patrimoine mondial et réserve de biosphère depuis 1986 par
+                    l'UNESCO. Il est, par le nombre de ses gravures rupestres, le premier site à l'échelle mondiale.
+                    Le parc abrite également la vallée d'Iherir, classée site Ramsar depuis le 2 février 2001.
+                </p>
+                <p class="infolist" id="Parc National du Djurdjura"><b>Le parc national du Djurdjura (en berbère :
+                        Urti Aɣelnaw n
+                        Ǧerǧer; en arabe : الحديقة الوطنية جرجرة)</b>, est un parc national algérien, situé dans la
+                    wilaya
+                    de Bouira, en Kabylie, au Nord de l'Algérie. Le parc abrite de vastes forêts, des gorges et des
+                    gouffres, où vit une faune très riche.
+                    Le parc est également une réserve de biosphère reconnue par l'UNESCO depuis 1997.
+                </p>
+                <p class="infolist" id="Réserve naturelle de Beni Belaid"><b>La réserve Naturelle de Beni Belaid</b>
+                    créée par arrêté de
+                    (c)nabile Wilaya N° 786/97 du 08/11/1997, fait partie de la zone humide du même nom et est
+                    située sur le littoral de la Commune de Kheiri Oued Adjoul , Daira d'El-Ancer .
+                    Elle est limitée :
+                    - Au Nord par la Mer Méditerranée
+                    - Au Sud par des terrains agricoles
+                    - A l'Ouest par l'Embouchure de l'Oued El Kebir .
+                    - A l'Est par des terrains incultes .
+                    A vol d'oiseau, elle se trouve à 30 Kms à l'Est de la Ville de Jijel.
+                    On y accède à partir de la Route Nationale 43, par la bifurcation donnant sur le CW 32 située à
+                    l'Ouest d'El-Ancer.
+                    La superficie totale de cette réserve est de 122 Ha qui englobe :
+                    - Un lac (10 Ha)
+                    - Des marécages (20 Ha)
+                    - Une peuleraie (37 Ha)
+                    - Des terrains sablonneux : Dunes et Plages (47 Ha)
+                    - Des terrains humides et broussailleux (08 Ha).
+                    L'écosystème de cette zone est formé par cinq types de milieux caractérisés notamment par un
+                    couvert végétal associé à une faune particulière .
+                </p>
+            </div>
+            <div id="tools" class="tabcontent">
+                <!--<span onclick="this.parentElement.style.display='none'" class="topright">&times</span>-->
+                <h3>tools</h3>
+                <p>
+                <div class="custom-control custom-switch ">
+                    <input type="checkbox" class="custom-control-input" id="search" name="search">
+                    <label class="custom-control-label" for="search">Activer la recherche par rayon</label>
+                </div>
+                </p>
+
+
+
+
+                <!--<label>Rayon (m):</label>
+                <input type="number" id="miles" placeholder="en mètre" min="0" max="500000" step="100" disabled>-->
+
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon3">Rayon (m):</span>
+                    </div>
+                    <input type="number" class="form-control" id="miles" aria-describedby="basic-addon3" min="0"
+                        max="500000" step="200" value="0" disabled>
+                </div>
+                <label for="favcolor">Changer la couleur du cercle:</label>
+                <!--<input type="color" onchange="myFunction()" id="favcolor" name="favcolor" value="#ff0000">-->
+                <input id="favcolor" onchange="myFunction()" name="favcolor" value='#ff0000'>
+
+                <!--<select id="miles" class="btn btn-primary" style="float: right;">
+                        <option value='500'>500 Meters</option>
+                        <option value='1000'>1000 Meters</option>
+                        <option value='1500'>1500 Meters</option>
+                        <option value='2000'>2000 Meters</option>
+                        <option value='3000'>3000 Meters</option>
+                        <option value='5000'>5000 Meters</option>
+                    </select>-->
+                <!--<input id="miles" >-->
+                <hr>
+                <div class="custom-control custom-switch ">
+                    <input type="checkbox" class="custom-control-input" id="Panfromtable" name="Panfromtable">
+                    <label class="custom-control-label" for="Panfromtable"><i
+                            class="fas fa-hand-rock"></i>&nbsp;déplacer au markers</label>
+                </div><br>
+
+
+                <button onclick="sortTable()" class="btn btn-primary" style="margin-bottom: 7px;"><i
+                        class="fas fa-sort-alpha-down"></i>&nbsp;Trier</button>
+
+
+
+
+
+
+
+                <table id="liste_P" class="table table-primary table-hover">
+                    <thead>
+                        <tr>
+                            <th
+                                style="text-align: center;background-color: steelblue;border: 2px solid steelblue;color: white;">
+                                Liste des Points d'interêts</th>
+                        </tr>
+                    </thead>
+                    <tbody id="t_points" style="cursor: pointer;"></tbody>
+                </table>
+
+            </div>
+          
+
+        </div>
+
+
+        <div class="column cc" style="background-color:#ccc;height: 100%;">
+            <div id="map">
+                <div id="info-pane" class="leaflet-bar">
+                    <p style="padding: 5px;">Hover Parcs layer to inspect</p>
+                </div>
+                <div id="info-pane3" class="center leaflet-bar"></div>
+                <div id="info-pane3" class="center leaflet-bar">
+                    <i class="fas fa-globe fa-lg center"></i>
+                </div>
+                <div id="info-pane2" class="center leaflet-bar">
+                    <p style="padding: 7px;" class="center">Get coordinate</p>
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="footer" style=" height: 5%;">
+
+    </div>
+    </div>
+
+
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+    <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js'></script>
+    <script type='text/javascript' src='https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js'></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/spectrum-colorpicker2/dist/spectrum.min.js"></script>
+
+
+    <script src="js/all.js"></script>
+    <script src="js/leaflet.zoomhome.min.js"></script>
+    <script src="js/leaflet.markercluster.js"></script>
+    <script src="base/Parcs.js"></script>
+    <script src="base/Parcs_point.js"></script>
+    <script src="base/POI_Algerie.js"></script>
+
+
+    <script>
+
+        $('#favcolor').spectrum({
+            type: "color",
+            showInitial: "true"
+        });
+        /*create function inside circle*/
+        L.Circle.include({
+            contains: function (latLng) {
+                return this.getLatLng().distanceTo(latLng) < this.getRadius();
+            }
+        });
+
+        function openCity(evt, cityName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(cityName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+        // Get the element with id="defaultOpen" and click on it
+        document.getElementById("defaultOpen").click();
+
+
+        //ESRI basemap
+        var Esri_WorldStreetMap = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
+
+            attribution: 'Tiles &copy; Esri &mdash; Source: Esri, DeLorme, NAVTEQ, USGS, Intermap, iPC, NRCAN, Esri Japan, METI, Esri China (Hong Kong), Esri (Thailand), TomTom, 2012'
+        });
+        var Esri_NatGeoWorldMap = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/{z}/{y}/{x}', {
+            attribution: 'Tiles &copy; Esri &mdash; National Geographic, Esri, DeLorme, NAVTEQ, UNEP-WCMC, USGS, NASA, ESA, METI, NRCAN, GEBCO, NOAA, iPC',
+            maxZoom: 16
+        });
+        var Esri_WorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+            attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+        });
+        //Stamen basemap
+        var Stamen_Terrain = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/terrain/{z}/{x}/{y}{r}.{ext}', {
+            attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            subdomains: 'abcd',
+            minZoom: 0,
+            maxZoom: 18,
+            ext: 'png'
+        });
+        var Stamen_Toner = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}{r}.{ext}', {
+            attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            subdomains: 'abcd',
+            minZoom: 0,
+            maxZoom: 20,
+            ext: 'png'
+        });
+        //OSM
+        var OpenStreetMap_Mapnik = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {//CartoDB_DarkMatter
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+            subdomains: 'abcd',
+            maxZoom: 19
+        });
+        var CyclOSM = L.tileLayer('https://{s}.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png', {
+            maxZoom: 20,
+            attribution: '<a href="https://github.com/cyclosm/cyclosm-cartocss-style/releases" title="CyclOSM - Open Bicycle render">CyclOSM</a> | Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        });
+
+       
+
+        var tabcontent = document.getElementsByName("baseMaps");
+        function uncheked() {
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].checked = false;
+            }
+        }
+        /*
+                function drawMap(tile) {
+                    map.eachLayer(function (layer) {
+                        map.removeLayer(layer);
+                    });
+                    //map.addLayer(Parcs_layer);
+                    //map.addLayer(Parcs_layer_points);
+        
+                    if (document.getElementById("Parcs_poly").checked === true) {
+                        map.addLayer(Parcs_layer);
+                    } else {
+                        map.removeLayer(Parcs_layer);
+                    }
+                    if (document.getElementById("Parcs_point").checked === true) {
+                        map.addLayer(Parcs_layer_points);
+                    } else {
+                        map.removeLayer(Parcs_layer_points);
+                    }
+                    if (document.getElementById("POI").checked === true) {
+                        map.addLayer(markerClusters);
+                    } else {
+                        map.removeLayer(markerClusters);
+                    }
+                    if (document.getElementById("POI").checked === true) {
+                        map.addLayer(markerClusters);
+                    } else {
+                        map.removeLayer(markerClusters);
+                    }
+                }
+        
+        
+        */
+
+
+        function drawMap() {
+            if (map.hasLayer(Esri_WorldStreetMap)) {
+                map.removeLayer(Esri_WorldStreetMap);
+            }
+            if (map.hasLayer(Esri_NatGeoWorldMap)) {
+                map.removeLayer(Esri_NatGeoWorldMap);
+            }
+            if (map.hasLayer(Esri_WorldImagery)) {
+                map.removeLayer(Esri_WorldImagery);
+            }
+            if (map.hasLayer(Stamen_Toner)) {
+                map.removeLayer(Stamen_Toner);
+            }
+            if (map.hasLayer(Stamen_Terrain)) {
+                map.removeLayer(Stamen_Terrain);
+            }
+            if (map.hasLayer(OpenStreetMap_Mapnik)) {
+                map.removeLayer(OpenStreetMap_Mapnik);
+            }
+            if (map.hasLayer(CyclOSM)) {
+                map.removeLayer(CyclOSM);
+            }
+
+        }
+
+
+
+
+        document.querySelector("input[id=EsriWorldStreetMap]").addEventListener('click', function () {
+            drawMap();
+
+            if (this.checked) map.addLayer(Esri_WorldStreetMap)
+            /*&& map.removeLayer(Esri_WorldImagery)
+            && map.removeLayer(Esri_NatGeoWorldMap)
+            && map.removeLayer(Stamen_Toner)
+            && map.removeLayer(Stamen_Terrain)*/
+            uncheked();
+            document.getElementById("EsriWorldStreetMap").checked = true;
+
+
+
+
+        })
+        document.querySelector("input[id=Esri_NatGeoWorldMap]").addEventListener('click', function () {
+            drawMap();
+
+            if (this.checked) map.addLayer(Esri_NatGeoWorldMap)
+
+            uncheked();
+            document.getElementById("Esri_NatGeoWorldMap").checked = true;
+
+        })
+        document.querySelector("input[id=Esri_WorldImagery]").addEventListener('click', function () {
+            drawMap();
+
+            if (this.checked) map.addLayer(Esri_WorldImagery)
+
+            uncheked();
+            document.getElementById("Esri_WorldImagery").checked = true;
+
+        })
+
+        document.querySelector("input[id=Stamen_Terrain]").addEventListener('click', function () {
+            drawMap();
+
+            if (this.checked) map.addLayer(Stamen_Terrain)
+
+            uncheked();
+            document.getElementById("Stamen_Terrain").checked = true;
+
+        })
+        document.querySelector("input[id=Stamen_Toner]").addEventListener('click', function () {
+            drawMap();
+
+            if (this.checked) map.addLayer(Stamen_Toner)
+
+            uncheked();
+            document.getElementById("Stamen_Toner").checked = true;
+        })
+        document.querySelector("input[id=OpenStreetMap_Mapnik]").addEventListener('click', function () {
+            drawMap();
+
+            if (this.checked) map.addLayer(OpenStreetMap_Mapnik)
+            uncheked();
+            document.getElementById("OpenStreetMap_Mapnik").checked = true;
+
+        })
+        document.querySelector("input[id=CyclOSM]").addEventListener('click', function () {
+            drawMap();
+
+            if (this.checked) map.addLayer(CyclOSM)
+            uncheked();
+            document.getElementById("CyclOSM").checked = true;
+        })
+
+        document.querySelector("input[id=Parcs_poly]").addEventListener('change', function () {
+            //drawMap(Parcs_layer);
+            if (this.checked) map.addLayer(Parcs_layer)
+            else map.removeLayer(Parcs_layer)
+            //uncheked();
+            //document.getElementById("Parcs_poly").checked = true;
+        })
+        document.querySelector("input[id=Parcs_point]").addEventListener('change', function () {
+            //drawMap(Parcs_layer);
+            if (this.checked) map.addLayer(Parcs_layer_points)
+            else map.removeLayer(Parcs_layer_points)
+            //uncheked();
+            //document.getElementById("Parcs_point").checked = true;
+        })
+        document.querySelector("input[id=POI]").addEventListener('change', function () {
+            //drawMap(Parcs_layer);
+            if (this.checked) map.addLayer(markerClusters)
+            else map.removeLayer(markerClusters)
+            //uncheked();
+            //document.getElementById("Parcs_point").checked = true;
+        })
+
+
+
+
+        var map = L.map('map', {
+            zoomControl: false, maxZoom: 28, minZoom: 0,
+
+        }).setView([35.911, 3.225], 7);
+
+        var MP = L.tileLayer('http://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+            maxZoom: 20,
+            subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
+        });
+        Esri_WorldStreetMap.addTo(map);
+        // MP.addTo(map);
+        var zoomHome = L.Control.zoomHome();
+        zoomHome.addTo(map);
+
+        function styleParcs(feature) {
+            return {
+                weight: 2,
+                opacity: 1,
+                color: 'white',
+                dashArray: '3',
+                fillOpacity: 0.9,
+                fillColor: 'rgba(10, 194, 22, 0.79)',/*getColorbew(feature.properties[field])*/
+            }
+        }
+
+        function highlightFeature(e) {
+            var layer = e.target;
+
+            layer.setStyle({
+                weight: 6,
+                color: 'rgba(5, 255, 213, 1)',//''#666',
+                dashArray: '',
+                fillOpacity: 0.3
+            });
+
+            if (!L.Browser.ie && !L.Browser.opera) {
+                layer.bringToFront();
+            }
+            // info.update(layer.feature.properties);
+
+        }
+        function resetHighlight(e) {
+            Parcs_layer.resetStyle(e.target);
+            // info.update();
+
+        }
+
+
+        function onEachFeature(feature, layer) {
+            layer._leaflet_id = feature.properties.name;
+
+            layer.on({
+                mouseover: highlightFeature,
+                mouseout: resetHighlight
+
+            });
+
+            // var teste = /* '<b>Nom:</b> ' +*/ feature.properties['name'];
+            var teste = '<table>\
+        <th style="background-color:steelblue;;letter-spacing: 2px;color:white; font-size:25px ;text-align: center;border-radius:8px;"scope="row" colspan="2">'+ feature.properties['name'] + '</th>\
+        <tr>\
+             <th scope="row">OSM is:</th>\
+            <td colspan="2">' + (feature.properties['osm_id']) + '</td>\
+       <tr>\
+        <th scope="row">Classe:</th>\
+            <td colspan="2">' + (feature.properties['fclass_fra']) + '</td>\
+        </tr>\
+        </table>'+ '<div class="line icon">\
+    <p class="line " style="cursor: pointer;" onclick= getinfo()><i class="fas fa-info-circle fa-lg"></i>&nbsp;&nbsp;Présentation</p>&nbsp;&nbsp;&nbsp;\
+    <p class="line " style="cursor: pointer;" onclick= getliste()><i class="fas fa-list fa-lg"></i>&nbsp;&nbsp;Liste des parcs</p>\
+    </div>';
+            layer.bindPopup(teste, { maxHeight: 400, offset: new L.Point(0, -50) });
+
+        }
+
+        function getinfo() {
+            // $('[href="#info"]').tab('show');
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+           document.getElementById('info').style.display = "block";
+          // document.getElementById('info_B').className.replace(" active", "");
+          $("#info_B").addClass("active");
+           
+        }
+
+
+        function getliste() {
+            //$('[href="#list"]').tab('show');
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+           document.getElementById('list').style.display = "block";
+          // document.getElementById('list_B').className.replace(" active", "");
+           $("#list_B").addClass("active");
+           
+        }
+
+
+        var Parcs_layer = L.geoJson(Parcs, {
+            style: styleParcs,
+            onEachFeature: onEachFeature
+        }).addTo(map);
+
+        //info box 
+
+        var info = L.control();
+
+        info.onAdd = function (map) {
+            this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+            this.update();
+            return this._div;
+        };
+
+        // method that we will use to update the control based on feature properties passed
+        info.update = function (props) {
+            this._div.innerHTML = (props ? '<table>\
+<th style="background-color: steelblue;letter-spacing: 2px;color:white; font-size:25px ;text-align: center;border-radius:0px;"scope="row" colspan="2">'+ props.name + '</th>\
+<tr>\
+     <th style="padding: 5px;font-size:15px" scope="row">OSM is:</th>\
+    <td style="padding: 5px;font-size:15px" colspan="2">' + props.osm_id + '</td>\
+<tr>\
+<th style="padding: 5px;font-size:15px" scope="row">Classe:</th>\
+    <td style="padding: 5px;font-size:15px" colspan="2">' + props.fclass + '</td>\
+</tr>\
+</table>' : '<i class="fas fa-info-circle"></i>');
+
+
+        };
+        //info.addTo(map);
+
+
+
+
+        var ESRI_Icon_bleu = L.icon({
+            iconUrl: 'css/images/marker_esri_3D.png',
+            iconSize: [20, 37],
+            iconAnchor: [8, 37],
+            popupAnchor: [0, -28]
+        });
+
+        var ESRI_Icon_rouge = L.icon({
+            iconUrl: 'css/images/marker_esri_3D_rouge.png',
+            iconSize: [20, 37],
+            iconAnchor: [16, 37],
+            popupAnchor: [0, -28]
+        });
+        function forEachFeature6(feature, layer) {     //SubRegions
+
+            layer.on("click", function (e) {
+                //	subregions.setStyle(style6);
+                //	layer.setStyle(highlight);
+                //	theSubRegionIs = e.target.feature.properties.Coalitions;
+                //sumSubRegion(theSubRegionIs);
+            }).bindTooltip(feature.properties.name, { className: 'tooltip_parc' });
+        }
+
+        var Parcs_layer_points = L.geoJson(Parcs_point, {
+            onEachFeature: forEachFeature6,
+            pointToLayer: function (feature, latlng) {
+                return L.marker(latlng, { icon: ESRI_Icon_rouge });
+            },
+        });
+       // Parcs_layer_points.addTo(map);
+
+        Parcs_layer.on('mouseout', function (e) {
+            document.getElementById('info-pane').innerHTML = '<p style="padding: 5px;">Hover Parcs layer to inspect</p>';
+        });
+
+        Parcs_layer.on('mouseover', function (e) {
+            // document.getElementById('info-pane').innerHTML = '<u>Name:</u>'+ e.layer.feature.properties.name+'<br>'+'Type:'+ e.layer.feature.properties.fclass;
+            document.getElementById('info-pane').innerHTML = '<table>\
+        <th style="background-color: steelblue;letter-spacing: 2px;color:white; font-size:25px ;text-align: center;border-radius:0px;"scope="row" colspan="2">'+ e.layer.feature.properties['name'] + '</th>\
+        <tr>\
+             <th style="padding: 5px;font-size:15px" scope="row">OSM is:</th>\
+            <td style="padding: 5px;font-size:15px" colspan="2">' + (e.layer.feature.properties['osm_id']) + '</td>\
+       <tr>\
+        <th style="padding: 5px;font-size:15px" scope="row">Classe:</th>\
+            <td style="padding: 5px;font-size:15px" colspan="2">' + (e.layer.feature.properties['fclass']) + '</td>\
+        </tr>\
+        </table>';
+        });
+        /*
+        Parcs_layer_points.on('mouseout', function (e) {
+            document.getElementById('info-pane').innerHTML = '<p style="padding: 5px;">Hover to Inspect</p>';
+        });
+
+        Parcs_layer_points.on('mouseover', function (e) {
+
+            document.getElementById('info-pane').innerHTML = e.layer.feature.properties.name;
+        });
+        */
+
+
+        map.on('mousemove', function (e) {
+            var lat = e.latlng.lat.toFixed(4);
+            var lon = e.latlng.lng.toFixed(4);
+            document.getElementById('info-pane2').innerHTML = "LAT: " + lat + " <br> LONG: " + lon;// ("You clicked the map at " + e.latlng.toString()).openPopup();
+        });
+
+
+
+
+
+        $(document).ready(function () {
+            $('#listparcs h3').click(function () {
+                var string = $(this).text();
+                //alert(string);
+                var layer_selected = L.geoJson(Parcs, {
+                    filter: filtre,
+                    color: '#29fff1', weight: 6.5, fillColor: '#fffc2e', fillOpacity: 0, opacity: 0.7,
+
+                });
+
+                function filtre(feature) {
+                    if (feature.properties['name'] === string) return true
+                }
+                map.fitBounds(layer_selected.getBounds(), { padding: [10, 10] });
+                //hide all presentation
+                var infolist = document.getElementsByClassName("infolist");
+                for (i = 0; i < infolist.length; i++) {
+                    infolist[i].style.display = "none";
+                }
+                //display selected parc presentation
+                document.getElementById(string).style.display = "block";
+                //Open Popup
+                map._layers[string].fire('click');
+                //var coords = map._layers[string]._latlng;
+                //map.setView(coords, 15);
+            });
+
+        });
+        $(document).ready(function () {
+            $('#listparcs h3').hover(function () {
+                var string = $(this).text();
+                map._layers[string].fire('mouseover');
+
+            });
+        });
+        $(document).ready(function () {
+            $('#listparcs h3').mouseout(function () {
+                var string = $(this).text();
+                map._layers[string].fire('mouseout');
+
+            });
+        });
+
+        var markerClusters = new L.MarkerClusterGroup({
+            spiderfyOnMaxZoom: true,
+            showCoverageOnHover: false,
+            zoomToBoundsOnClick: true,
+            disableClusteringAtZoom: 16,
+            /*Custom style from https://www.datavis.fr/index.php?page=leaflet-cluster */
+
+            iconCreateFunction: function (cluster) {
+                var digits = (cluster.getChildCount() + '').length;
+                return L.divIcon({
+                    html: cluster.getChildCount(),
+                    className: 'cluster digits-' + digits,
+                    iconSize: null
+                });
+            }
+
+        });//.addTo(map);
+
+
+
+        function forEachFeaturePoi(feature, layer) {
+            layer._leaflet_id = feature.properties.name;
+            var tooltip = "Type: " + feature.properties.fclass_fra + " <br> Nom: " + feature.properties.name;
+            layer.on("click", function (e) {
+            }).bindTooltip(tooltip, { className: 'tooltip_poi' });
+        }
+        var Points_POI = L.geoJson(POI, {
+
+            // style: styleParcs,
+            onEachFeature: forEachFeaturePoi,
+            pointToLayer: function (feature, latlng) {
+                return L.marker(latlng, { icon: ESRI_Icon_bleu });
+            },
+        });
+        markerClusters.addLayer(Points_POI);
+
+
+
+        var color;
+
+        document.querySelector("input[id=search]").addEventListener('change', function () {
+            if (this.checked) {
+                document.getElementById("miles").disabled = false;
+                document.getElementById("favcolor").disabled = false;
+                color = document.getElementById("favcolor").value;
+
+            } else {
+                document.getElementById("miles").disabled = true;
+                document.getElementById("miles").value = 0;
+                document.getElementById("favcolor").disabled = true;
+                color = 'rgba(255, 255, 255, 0)';
+                map.removeLayer(theMarker);
+                map.removeLayer(theCircle);
+                map.removeLayer(geojsonLayer);
+                $("#t_points").empty();
+
+
+
+            }
+
+        })
+
+
+
+
+
+        //Recherche par cercle
+        var theMarker;
+        var theCircle;
+        var geojsonLayer;
+        var dist;
+        var theRadius;
+
+        function ProcessClick(lat, lon) {
+            console.log("You clicked the map at LAT: " + lat + " and LONG: " + lon);
+            //Clear existing marker, circle, and selected points if selecting new points
+            if (theCircle != undefined) {
+                map.removeLayer(theCircle);
+            };
+            if (theMarker != undefined) {
+                map.removeLayer(theMarker);
+            };
+            if (geojsonLayer != undefined) {
+                map.removeLayer(geojsonLayer);
+            };
+
+
+        };
+
+
+        function myFunction() {
+            color = document.getElementById("favcolor").value;
+        }
+
+        var sel = [];
+
+
+
+        map.on('click', function (e) {
+            dist = document.getElementById("miles").value;
+            theRadius = parseInt(dist);
+
+            var lat = e.latlng.lat;
+            var lon = e.latlng.lng;
+            ProcessClick(lat, lon)
+
+            // theMarker = L.marker([lat, lon]).addTo(map);
+
+            theMarker = L.circle([lat, lon], 15, {
+                color: color,
+                fillOpacity: 0,
+                opacity: 1
+            }).addTo(map);
+
+
+            theCircle = L.circle([lat, lon], theRadius, {
+                color: color,
+                fillOpacity: 0,
+                opacity: 1
+            }).addTo(map);
+
+
+            if ($('#search').is(":checked") && theRadius !== 0) { map.fitBounds(theCircle.getBounds(), { padding: [10, 10] }) }
+            if ($('#search').is(":checked") && theRadius === 0) { alert('Introduire le rayon de recherche') }
+
+            sel.length = 0; //vider la table sel
+
+            Points_POI.eachLayer(function (layer) {
+                XY = layer.getLatLng();
+
+                if (theCircle.contains(XY)) {
+                    sel.push(layer.feature);
+
+                }
+                var GeoJS = { type: "FeatureCollection", features: sel };
+                //Show number of selected features.
+                //console.log(GeoJS.features.length + " Selected features");
+            });
+
+
+            geojsonLayer = L.geoJson(sel, {
+                onEachFeature: forEachFeaturePoi,
+                pointToLayer: function (feature, latlng) {
+                    return L.marker(latlng, { icon: ESRI_Icon_bleu });
+                },
+
+            });
+
+            //Add selected points back into map as green circles.
+
+            map.addLayer(geojsonLayer);
+
+
+
+            if (map.hasLayer(markerClusters)) {
+                map.removeLayer(markerClusters);
+                document.getElementById("POI").checked = false;
+            }
+
+            $("#t_points").empty();
+
+            for (var i = 0; i < sel.length; i++) {
+                var id = sel[i].properties.fclass_fra;
+                var x_p = sel[i].geometry.coordinates[0];
+                var y_p = sel[i].geometry.coordinates[1];
+
+                addRowTable(id, [y_p, x_p]);
+
+
+            }
+            // sortTable();
+
+        });
+
+
+        /*
+        $(document).ready(function () {
+            $('#demo10').click(function () {
+                var string2 = $(this).text();
+                alert(string2)
+            });
+        });
+        */
+
+        function addRowTable(code, coords) {
+            //function addRowTable(code) {
+            var highlight;
+
+            var tr = document.createElement("tr");
+            var td = document.createElement("td");
+            td.textContent = code;
+            tr.appendChild(td);
+            tr.onclick = function () {
+                map.flyTo(coords, 17);
+                var highlight = L.circle(coords, 15, {
+                    color: '#10e3e3',
+                    fillColor: '#10e3e3',
+                    fillOpacity: 0.8,
+                    opacity: 1
+                }).addTo(map);
+                $(document).off("mouseout", "tr", map.removeLayer(highlight));
+
+            };
+            document.querySelector("input[id=Panfromtable]").addEventListener('change', function () {
+                if (this.checked) {
+                    tr.onmouseover = function () {
+                        map.panTo(coords, 17);
+                        highlight = L.circle(coords, 15, {
+                            color: '#10e3e3',
+                            fillColor: '#10e3e3',
+                            fillOpacity: 0.8,
+                            opacity: 1
+                        }).addTo(map);
+                    };
+                    tr.onmouseout = function () {
+                        map.removeLayer(highlight);
+                    };
+
+                } else {
+
+                    tr.onmouseover = function () {
+                        // map.panTo(coords, 17);
+                        highlight = L.circle(coords, 15, {
+                            color: '#10e3e3',
+                            fillColor: '#10e3e3',
+                            fillOpacity: 0.8,
+                            opacity: 1
+                        }).addTo(map);
+                    };
+                    tr.onmouseout = function () {
+                        map.removeLayer(highlight);
+                    };
+
+                }
+
+            })
+
+            tr.onmouseover = function () {
+                // map.panTo(coords, 17);
+                highlight = L.circle(coords, 15, {
+                    color: '#10e3e3',
+                    fillColor: '#10e3e3',
+                    fillOpacity: 0.8,
+                    opacity: 1
+                }).addTo(map);
+            };
+            tr.onmouseout = function () {
+                map.removeLayer(highlight);
+            };
+
+            document.getElementById("t_points").appendChild(tr);
+        }
+
+        function sortTable() {
+            var table, rows, switching, i, x, y, shouldSwitch;
+            table = document.getElementById("liste_P");
+            switching = true;
+            /*Make a loop that will continue until
+            no switching has been done:*/
+            while (switching) {
+                //start by saying: no switching is done:
+                switching = false;
+                rows = table.rows;
+                /*Loop through all table rows (except the
+                first, which contains table headers):*/
+                for (i = 1; i < (rows.length - 1); i++) {
+                    //start by saying there should be no switching:
+                    shouldSwitch = false;
+                    /*Get the two elements you want to compare,
+                    one from current row and one from the next:*/
+                    x = rows[i].getElementsByTagName("TD")[0];
+                    y = rows[i + 1].getElementsByTagName("TD")[0];
+                    //check if the two rows should switch place:
+                    if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                        //if so, mark as a switch and break the loop:
+                        shouldSwitch = true;
+                        break;
+                    }
+                }
+                if (shouldSwitch) {
+                    /*If a switch has been marked, make the switch
+                    and mark that a switch has been done:*/
+                    rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                    switching = true;
+                }
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+    </script>
+
+</body>
+
+</html>
