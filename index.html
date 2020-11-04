@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
     <title>Parcs Nationaux Algérie</title>
-   
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" />
@@ -111,11 +111,12 @@
             /* background-color: #444444;*/
             background-color: steelblue;
             padding: 12px;
-
             text-align: left;
             font-size: 15px;
             width: 100%;
             color: #FFFFFF;
+            height: 10%;
+            letter-spacing: 7px;
 
 
         }
@@ -177,6 +178,28 @@
             /*overflow-x: hidden;*/
         }
 
+        .column2 {
+            float: left;
+            width: 33.33%;
+            padding: 1px;
+            /*height: 400px;*/
+            /* Should be removed. Only for demonstration */
+            height: 100%;
+            /*overflow-y: auto;*/
+            /*overflow-x: hidden;*/
+        }
+
+        .column3 {
+            float: left;
+            width: 33.33%;
+            padding: 1px;
+            /*height: 400px;*/
+            /* Should be removed. Only for demonstration */
+            height: 100%;
+            /*overflow-y: auto;*/
+            /*overflow-x: hidden;*/
+        }
+
         .row {
             display: -ms-flexbox;
             display: flex;
@@ -221,6 +244,32 @@
             .column {
                 width: 100%;
             }
+
+            .column2 {
+                width: 20%;
+            }
+
+            .column3 {
+                width: 80%;
+            }
+
+            .header h2 {
+                /* background-color: #444444;*/
+                background-color: steelblue;
+                padding: 1px 1px;
+                text-align: center;
+                font-size: 21px;
+                letter-spacing: 0px;
+            }
+
+            #info-pane2, #info-pane3 {
+                display: none;
+            }
+
+
+
+
+
         }
 
         /*nav tabs in modal*/
@@ -534,14 +583,14 @@
 
 <body>
 
-    <div class="header" style="height: 10%;">
-        <h2 style="letter-spacing: 7px;"><i class="fas fa-map-marked-alt fa-lg"></i>&nbsp;&nbsp;Parcs Nationaux en Algérie
+    <div class="header">
+        <h2><i class="fas fa-map-marked-alt fa-lg"></i>&nbsp;&nbsp;Parcs Nationaux en Algérie
         </h2>
 
     </div>
 
     <div class="row" style="height: 85%;">
-        <div class="column aa" style="background-color:#aaa;height: 100%;">
+        <div class="column2 aa" style="background-color:#aaa;height: 100%;">
 
             <div class="tab">
                 <button class="tablinks" onclick="openCity(event, 'home')" id="defaultOpen"><i
@@ -549,19 +598,20 @@
                 <button class="tablinks" onclick="openCity(event, 'basemap')"><i class="fas fa-map"></i><br>Map</button>
                 <button class="tablinks" onclick="openCity(event, 'overly')"><i
                         class="fas fa-layer-group"></i><br>Overly</button>
-                <button class="tablinks"  id="list_B" onclick="openCity(event, 'list')"><i class="fas fa-list"></i><br>List</button>
+                <button class="tablinks" id="list_B" onclick="openCity(event, 'list')"><i
+                        class="fas fa-list"></i><br>List</button>
                 <button class="tablinks" id="info_B" onclick="openCity(event, 'info')"><i
                         class="fas fa-info-circle"></i><br>Info</button>
-               
-               
+
+
                 <button class="tablinks" onclick="openCity(event, 'tools')"><i
                         class="fas fa-tools"></i><br>Tools</button>
-               
+
             </div>
 
         </div>
 
-        <div class="column bb" style="background-color:#aaa;height: 100%;">
+        <div class="column3 bb" style="background-color:#aaa;height: 100%;">
             <div id="home" class="tabcontent">
                 <!--<span onclick="this.parentElement.style.display='none'" class="topright">&times</span>-->
                 <h3>Home</h3>
@@ -715,7 +765,7 @@
                                         </div>
                                         <div class="custom-control custom-switch ">
                                             <input type="checkbox" class="custom-control-input" id="Parcs_point"
-                                                name="Parcs_point" >
+                                                name="Parcs_point">
                                             <label class="custom-control-label" for="Parcs_point">Parcs Point</label>
                                         </div>
                                     </form>
@@ -1037,7 +1087,7 @@
                 </table>
 
             </div>
-          
+
 
         </div>
 
@@ -1047,7 +1097,7 @@
                 <div id="info-pane" class="leaflet-bar">
                     <p style="padding: 5px;">Hover Parcs layer to inspect</p>
                 </div>
-                <div id="info-pane3" class="center leaflet-bar"></div>
+               
                 <div id="info-pane3" class="center leaflet-bar">
                     <i class="fas fa-globe fa-lg center"></i>
                 </div>
@@ -1152,7 +1202,7 @@
             attribution: '<a href="https://github.com/cyclosm/cyclosm-cartocss-style/releases" title="CyclOSM - Open Bicycle render">CyclOSM</a> | Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         });
 
-       
+
 
         var tabcontent = document.getElementsByName("baseMaps");
         function uncheked() {
@@ -1400,10 +1450,10 @@
             for (i = 0; i < tablinks.length; i++) {
                 tablinks[i].className = tablinks[i].className.replace(" active", "");
             }
-           document.getElementById('info').style.display = "block";
-          // document.getElementById('info_B').className.replace(" active", "");
-          $("#info_B").addClass("active");
-           
+            document.getElementById('info').style.display = "block";
+            // document.getElementById('info_B').className.replace(" active", "");
+            $("#info_B").addClass("active");
+
         }
 
 
@@ -1418,10 +1468,10 @@
             for (i = 0; i < tablinks.length; i++) {
                 tablinks[i].className = tablinks[i].className.replace(" active", "");
             }
-           document.getElementById('list').style.display = "block";
-          // document.getElementById('list_B').className.replace(" active", "");
-           $("#list_B").addClass("active");
-           
+            document.getElementById('list').style.display = "block";
+            // document.getElementById('list_B').className.replace(" active", "");
+            $("#list_B").addClass("active");
+
         }
 
 
@@ -1489,7 +1539,7 @@
                 return L.marker(latlng, { icon: ESRI_Icon_rouge });
             },
         });
-       // Parcs_layer_points.addTo(map);
+        // Parcs_layer_points.addTo(map);
 
         Parcs_layer.on('mouseout', function (e) {
             document.getElementById('info-pane').innerHTML = '<p style="padding: 5px;">Hover Parcs layer to inspect</p>';
