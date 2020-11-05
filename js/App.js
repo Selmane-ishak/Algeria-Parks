@@ -240,6 +240,16 @@
 
         }
 
+        function info(e) {
+            
+            var infolist = document.getElementsByClassName("infolist");
+                for (i = 0; i < infolist.length; i++) {
+                    infolist[i].style.display = "none";
+                }
+                
+            document.getElementById(e.target.feature.properties.name).style.display = "block";
+        }
+
        
 
 
@@ -248,7 +258,8 @@
 
             layer.on({
                 mouseover: highlightFeature,
-                mouseout: resetHighlight
+                mouseout: resetHighlight,
+                click: info
 
             });
 
