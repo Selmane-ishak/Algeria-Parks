@@ -274,6 +274,8 @@
 
         }
 
+       
+
 
         function onEachFeature(feature, layer) {
             layer._leaflet_id = feature.properties.name;
@@ -295,7 +297,7 @@
             <td colspan="2">' + (feature.properties['fclass_fra']) + '</td>\
         </tr>\
         </table>'+ '<div class="line icon">\
-    <p class="line " style="cursor: pointer;" onclick= getinfo()><i class="fas fa-info-circle fa-lg"></i>&nbsp;&nbsp;Présentation</p>&nbsp;&nbsp;&nbsp;\
+    <p class="line " style="cursor: pointer;" onclick= getinfo()><i class="fas fa-info-circle fa-lg"></i>&nbsp;&nbsp;Pr�sentation</p>&nbsp;&nbsp;&nbsp;\
     <p class="line " style="cursor: pointer;" onclick= getliste()><i class="fas fa-list fa-lg"></i>&nbsp;&nbsp;Liste des parcs</p>\
     </div>';
             layer.bindPopup(teste, { maxHeight: 400, offset: new L.Point(0, -50) });
@@ -526,88 +528,92 @@
 
         var color;
 
-        document.querySelector("input[id=search]").addEventListener('change', function () {
-            if (this.checked) {
-                document.getElementById("miles").disabled = false;
-                document.getElementById("favcolor").disabled = false;
-                color = document.getElementById("favcolor").value;
-                 map.on('click', function (e) {
-            dist = document.getElementById("miles").value;
-            theRadius = parseInt(dist);
+       // var verified_POI = document.getElementById("POI").checked;
 
-            var lat = e.latlng.lat;
-            var lon = e.latlng.lng;
-            ProcessClick(lat, lon)
+       function search(e) {
+        dist = document.getElementById("miles").value;
+        theRadius = parseInt(dist);
 
-            // theMarker = L.marker([lat, lon]).addTo(map);
+        var lat = e.latlng.lat;
+        var lon = e.latlng.lng;
+        ProcessClick(lat, lon)
 
-            theMarker = L.circle([lat, lon], 15, {
-                color: color,
-                fillOpacity: 0,
-                opacity: 1
-            }).addTo(map);
+        // theMarker = L.marker([lat, lon]).addTo(map);
+
+        theMarker = L.circle([lat, lon], 15, {
+            color: color,
+            fillOpacity: 0,
+            opacity: 1
+        }).addTo(map);
 
 
-            theCircle = L.circle([lat, lon], theRadius, {
-                color: color,
-                fillOpacity: 0,
-                opacity: 1
-            }).addTo(map);
+        theCircle = L.circle([lat, lon], theRadius, {
+            color: color,
+            fillOpacity: 0,
+            opacity: 1
+        }).addTo(map);
 
 
-            if ($('#search').is(":checked") && theRadius !== 0) { map.fitBounds(theCircle.getBounds(), { padding: [10, 10] }) }
-            if ($('#search').is(":checked") && theRadius === 0) { alert('Introduire le rayon de recherche') }
+        if ($('#search').is(":checked") && theRadius !== 0) { map.fitBounds(theCircle.getBounds(), { padding: [10, 10] }) }
+        if ($('#search').is(":checked") && theRadius === 0) { alert('Introduire le rayon de recherche') }
 
-            sel.length = 0; //vider la table sel
+        sel.length = 0; //vider la table sel
 
-            Points_POI.eachLayer(function (layer) {
-                XY = layer.getLatLng();
+        Points_POI.eachLayer(function (layer) {
+            XY = layer.getLatLng();
 
-                if (theCircle.contains(XY)) {
-                    sel.push(layer.feature);
-
-                }
-                var GeoJS = { type: "FeatureCollection", features: sel };
-                //Show number of selected features.
-                //console.log(GeoJS.features.length + " Selected features");
-            });
-
-
-            geojsonLayer = L.geoJson(sel, {
-                onEachFeature: forEachFeaturePoi,
-                pointToLayer: function (feature, latlng) {
-                    return L.marker(latlng, { icon: ESRI_Icon_bleu });
-                },
-
-            });
-
-            //Add selected points back into map as green circles.
-
-            map.addLayer(geojsonLayer);
-
-
-
-            if (map.hasLayer(markerClusters)) {
-                map.removeLayer(markerClusters);
-                document.getElementById("POI").checked = false;
-            }
-
-            $("#t_points").empty();
-
-            for (var i = 0; i < sel.length; i++) {
-                var id = sel[i].properties.fclass_fra;
-                var x_p = sel[i].geometry.coordinates[0];
-                var y_p = sel[i].geometry.coordinates[1];
-
-                addRowTable(id, [y_p, x_p]);
-
+            if (theCircle.contains(XY)) {
+                sel.push(layer.feature);
 
             }
-            // sortTable();
+            var GeoJS = { type: "FeatureCollection", features: sel };
+            //Show number of selected features.
+            //console.log(GeoJS.features.length + " Selected features");
+        });
+
+
+        geojsonLayer = L.geoJson(sel, {
+            onEachFeature: forEachFeaturePoi,
+            pointToLayer: function (feature, latlng) {
+                return L.marker(latlng, { icon: ESRI_Icon_bleu });
+            },
 
         });
 
-            } else {
+        //Add selected points back into map as green circles.
+
+        map.addLayer(geojsonLayer);
+
+
+
+        if (map.hasLayer(markerClusters)) {
+            map.removeLayer(markerClusters);
+            document.getElementById("POI").checked = false;
+        }
+
+        $("#t_points").empty();
+
+        for (var i = 0; i < sel.length; i++) {
+            var id = sel[i].properties.fclass_fra;
+            var x_p = sel[i].geometry.coordinates[0];
+            var y_p = sel[i].geometry.coordinates[1];
+
+            addRowTable(id, [y_p, x_p]);
+
+
+        }
+        // sortTable();
+
+    }
+
+        document.querySelector("input[id=search]").addEventListener('change', function () {
+            if (this.checked===true) {
+                document.getElementById("miles").disabled = false;
+                document.getElementById("favcolor").disabled = false;
+                color = document.getElementById("favcolor").value;
+                map.on('click', search);
+
+            } else  if (this.checked===false) {
                 document.getElementById("miles").disabled = true;
                 document.getElementById("miles").value = 0;
                 document.getElementById("favcolor").disabled = true;
@@ -616,15 +622,11 @@
                 map.removeLayer(theCircle);
                 map.removeLayer(geojsonLayer);
                 $("#t_points").empty();
-
-
+                map.off('click', search);
 
             }
 
         })
-
-
-
 
 
         //Recherche par cercle
@@ -657,6 +659,9 @@
 
         var sel = [];
 
+
+
+      
 
 
         /*
