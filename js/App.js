@@ -73,38 +73,7 @@
                 tabcontent[i].checked = false;
             }
         }
-        /*
-                function drawMap(tile) {
-                    map.eachLayer(function (layer) {
-                        map.removeLayer(layer);
-                    });
-                    //map.addLayer(Parcs_layer);
-                    //map.addLayer(Parcs_layer_points);
-        
-                    if (document.getElementById("Parcs_poly").checked === true) {
-                        map.addLayer(Parcs_layer);
-                    } else {
-                        map.removeLayer(Parcs_layer);
-                    }
-                    if (document.getElementById("Parcs_point").checked === true) {
-                        map.addLayer(Parcs_layer_points);
-                    } else {
-                        map.removeLayer(Parcs_layer_points);
-                    }
-                    if (document.getElementById("POI").checked === true) {
-                        map.addLayer(markerClusters);
-                    } else {
-                        map.removeLayer(markerClusters);
-                    }
-                    if (document.getElementById("POI").checked === true) {
-                        map.addLayer(markerClusters);
-                    } else {
-                        map.removeLayer(markerClusters);
-                    }
-                }
-        
-        
-        */
+      
 
 
         function drawMap() {
@@ -139,10 +108,7 @@
             drawMap();
 
             if (this.checked) map.addLayer(Esri_WorldStreetMap)
-            /*&& map.removeLayer(Esri_WorldImagery)
-            && map.removeLayer(Esri_NatGeoWorldMap)
-            && map.removeLayer(Stamen_Toner)
-            && map.removeLayer(Stamen_Terrain)*/
+           
             uncheked();
             document.getElementById("EsriWorldStreetMap").checked = true;
 
@@ -404,6 +370,7 @@
                 return L.marker(latlng, { icon: ESRI_Icon_rouge });
             },
         });
+
         // Parcs_layer_points.addTo(map);
 
         Parcs_layer.on('mouseout', function (e) {
@@ -554,8 +521,8 @@
         }).addTo(map);
 
 
-        if ($('#search').is(":checked") && theRadius !== 0) { map.fitBounds(theCircle.getBounds(), { padding: [10, 10] }) }
-        if ($('#search').is(":checked") && theRadius === 0) { alert('Introduire le rayon de recherche') }
+        if ($('#search').is(":checked") && theRadius !== 0) { map.fitBounds(theCircle.getBounds(), { padding: [10, 10] }) 
+        
 
         sel.length = 0; //vider la table sel
 
@@ -602,7 +569,15 @@
 
 
         }
+    }
+
+        if ($('#search').is(":checked") && theRadius === 0) { 
+            alert('Introduire le rayon de recherche');
+            
+            
+            }
         // sortTable();
+       
 
     }
 
