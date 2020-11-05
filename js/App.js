@@ -295,7 +295,7 @@
             <td colspan="2">' + (feature.properties['fclass_fra']) + '</td>\
         </tr>\
         </table>'+ '<div class="line icon">\
-    <p class="line " style="cursor: pointer;" onclick= getinfo()><i class="fas fa-info-circle fa-lg"></i>&nbsp;&nbsp;Présentation</p>&nbsp;&nbsp;&nbsp;\
+    <p class="line " style="cursor: pointer;" onclick= getinfo()><i class="fas fa-info-circle fa-lg"></i>&nbsp;&nbsp;PrÃ©sentation</p>&nbsp;&nbsp;&nbsp;\
     <p class="line " style="cursor: pointer;" onclick= getliste()><i class="fas fa-list fa-lg"></i>&nbsp;&nbsp;Liste des parcs</p>\
     </div>';
             layer.bindPopup(teste, { maxHeight: 400, offset: new L.Point(0, -50) });
@@ -531,60 +531,7 @@
                 document.getElementById("miles").disabled = false;
                 document.getElementById("favcolor").disabled = false;
                 color = document.getElementById("favcolor").value;
-
-            } else {
-                document.getElementById("miles").disabled = true;
-                document.getElementById("miles").value = 0;
-                document.getElementById("favcolor").disabled = true;
-                color = 'rgba(255, 255, 255, 0)';
-                map.removeLayer(theMarker);
-                map.removeLayer(theCircle);
-                map.removeLayer(geojsonLayer);
-                $("#t_points").empty();
-
-
-
-            }
-
-        })
-
-
-
-
-
-        //Recherche par cercle
-        var theMarker;
-        var theCircle;
-        var geojsonLayer;
-        var dist;
-        var theRadius;
-
-        function ProcessClick(lat, lon) {
-            console.log("You clicked the map at LAT: " + lat + " and LONG: " + lon);
-            //Clear existing marker, circle, and selected points if selecting new points
-            if (theCircle != undefined) {
-                map.removeLayer(theCircle);
-            };
-            if (theMarker != undefined) {
-                map.removeLayer(theMarker);
-            };
-            if (geojsonLayer != undefined) {
-                map.removeLayer(geojsonLayer);
-            };
-
-
-        };
-
-
-        function myFunction() {
-            color = document.getElementById("favcolor").value;
-        }
-
-        var sel = [];
-
-
-
-        map.on('click', function (e) {
+                 map.on('click', function (e) {
             dist = document.getElementById("miles").value;
             theRadius = parseInt(dist);
 
@@ -659,6 +606,57 @@
             // sortTable();
 
         });
+
+            } else {
+                document.getElementById("miles").disabled = true;
+                document.getElementById("miles").value = 0;
+                document.getElementById("favcolor").disabled = true;
+                color = 'rgba(255, 255, 255, 0)';
+                map.removeLayer(theMarker);
+                map.removeLayer(theCircle);
+                map.removeLayer(geojsonLayer);
+                $("#t_points").empty();
+
+
+
+            }
+
+        })
+
+
+
+
+
+        //Recherche par cercle
+        var theMarker;
+        var theCircle;
+        var geojsonLayer;
+        var dist;
+        var theRadius;
+
+        function ProcessClick(lat, lon) {
+            console.log("You clicked the map at LAT: " + lat + " and LONG: " + lon);
+            //Clear existing marker, circle, and selected points if selecting new points
+            if (theCircle != undefined) {
+                map.removeLayer(theCircle);
+            };
+            if (theMarker != undefined) {
+                map.removeLayer(theMarker);
+            };
+            if (geojsonLayer != undefined) {
+                map.removeLayer(geojsonLayer);
+            };
+
+
+        };
+
+
+        function myFunction() {
+            color = document.getElementById("favcolor").value;
+        }
+
+        var sel = [];
+
 
 
         /*
