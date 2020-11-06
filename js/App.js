@@ -271,7 +271,7 @@
             <td colspan="2">' + (feature.properties['osm_id']) + '</td>\
        <tr>\
         <th scope="row">Classe:</th>\
-            <td colspan="2">' + (feature.properties['fclass_fra']) + '</td>\
+            <td colspan="2">' + (feature.properties['fclass']) + '</td>\
         </tr>\
         </table>'+ '<div class="line icon">\
     <p class="line " style="cursor: pointer;" onclick= getinfo()><i class="fas fa-info-circle fa-lg"></i>&nbsp;&nbsp;Pr�sentation</p>&nbsp;&nbsp;&nbsp;\
