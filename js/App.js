@@ -207,6 +207,16 @@
         var zoomHome = L.Control.zoomHome();
         zoomHome.addTo(map);
 
+
+        loc = L.control.locate({
+            strings: {
+                title: "Show me where I am!"
+            }
+        }).addTo(map);
+
+
+
+
         function styleParcs(feature) {
             return {
                 weight: 2,
